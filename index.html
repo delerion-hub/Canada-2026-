@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍁 Guide Canada 2026 — Famille Prudenzano-Aupetit</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root {
+    --maple:#C0392B; --maple-light:#FADBD8; --maple-dark:#922B21;
+    --blue:#1A5276; --blue-light:#D6EAF8; --green-light:#D5F5E3;
+    --orange-light:#FDEBD0; --yellow-light:#FEF9E7;
+    --grey-light:#F4F6F7; --grey:#E5E8E8;
+    --text:#1C2833; --text-muted:#5D6D7E; --white:#fff;
+    --shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#F0F3F4; color:var(--text); }
+  nav { position:sticky; top:0; z-index:100; background:var(--maple); display:flex; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,.2); }
+  .nav-brand { padding:14px 20px; font-size:15px; font-weight:600; white-space:nowrap; border-right:1px solid rgba(255,255,255,.2); color:white; }
+  .nav-tabs { display:flex; overflow-x:auto; flex:1; }
+  .nav-tab { padding:14px 16px; font-size:13px; color:rgba(255,255,255,.75); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent; transition:all .15s; text-decoration:none; display:block; }
+  .nav-tab:hover { color:white; background:rgba(255,255,255,.1); }
+  .nav-tab.active { color:white; border-bottom-color:white; font-weight:500; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 16px; }
+  .section { display:none; } .section.active { display:block; }
+  .cover { background:linear-gradient(135deg,var(--maple) 0%,var(--maple-dark) 100%); color:white; border-radius:16px; padding:60px 40px; text-align:center; margin-bottom:24px; box-shadow:var(--shadow); }
+  .cover-flag { font-size:80px; margin-bottom:20px; }
+  .cover h1 { font-size:42px; font-weight:700; margin-bottom:8px; }
+  .cover h2 { font-size:22px; font-weight:400; opacity:.85; margin-bottom:24px; }
+  .cover-date { display:inline-block; background:rgba(255,255,255,.2); padding:10px 28px; border-radius:50px; font-size:18px; font-weight:500; margin-bottom:24px; }
+  .cover-family { font-size:16px; opacity:.8; }
+  .card { background:white; border-radius:12px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:16px; }
+  .card-header { padding:14px 20px; font-size:16px; font-weight:600; }
+  .card-header.maple { background:var(--maple); color:white; }
+  .card-header.blue { background:var(--blue); color:white; }
+  .card-header.green { background:#1E8449; color:white; }
+  .card-body { padding:16px 20px; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media(max-width:700px){ .grid-2,.grid-4 { grid-template-columns:1fr; } }
+  .info-row { display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--grey); gap:12px; }
+  .info-row:last-child { border-bottom:none; }
+  .info-label { font-size:13px; color:var(--text-muted); min-width:120px; }
+  .info-value { font-size:13px; font-weight:500; text-align:right; }
+  .badge { display:inline-block; font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; }
+  .badge-red { background:var(--maple-light); color:var(--maple); }
+  .badge-orange { background:var(--orange-light); color:#784212; }
+  .badge-blue { background:var(--blue-light); color:var(--blue); }
+  .badge-green { background:var(--green-light); color:#1A5733; }
+  .alert { padding:12px 16px; border-radius:8px; font-size:13px; margin:8px 0; }
+  .alert-warn { background:var(--yellow-light); border-left:4px solid #D4AC0D; color:#7D6608; font-weight:500; }
+  .alert-info { background:var(--blue-light); border-left:4px solid #2E86C1; color:var(--blue); }
+  .alert-success { background:var(--green-light); border-left:4px solid #1E8449; color:#1A5733; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { background:var(--maple); color:white; padding:10px 12px; text-align:left; font-weight:500; }
+  td { padding:9px 12px; border-bottom:1px solid var(--grey); }
+  tr:nth-child(even) td { background:var(--grey-light); }
+  tr:last-child td { border-bottom:none; }
+  .planning-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
+  .planning-nav { display:flex; gap:8px; }
+  .btn { padding:8px 18px; border-radius:8px; border:none; cursor:pointer; font-size:13px; font-weight:500; transition:all .15s; }
+  .btn-secondary { background:white; color:var(--text); border:1px solid var(--grey); }
+  .btn-secondary:hover { background:var(--grey-light); }
+  .day-counter { font-size:14px; font-weight:600; color:var(--maple); }
+  .day-card { background:white; border-radius:12px; box-shadow:var(--shadow); overflow:hidden; }
+  .day-card-header { color:white; padding:18px 24px; }
+  .day-card-num { font-size:11px; opacity:.75; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+  .day-card-title { font-size:22px; font-weight:700; margin-bottom:4px; }
+  .day-card-subtitle { font-size:14px; opacity:.85; }
+  .day-card-body { display:grid; grid-template-columns:1fr 1fr; }
+  @media(max-width:700px){ .day-card-body { grid-template-columns:1fr; } }
+  .day-col { padding:20px 24px; }
+  .day-col:first-child { border-right:1px solid var(--grey); }
+  .day-col-title { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:12px; }
+  .hotel-name { font-size:16px; font-weight:600; margin-bottom:4px; }
+  .hotel-addr { font-size:13px; color:var(--text-muted); margin-bottom:4px; }
+  .hotel-resa { font-size:13px; color:var(--blue); font-weight:500; }
+  .maps-link { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:8px 16px; background:var(--blue-light); color:var(--blue); border-radius:8px; font-size:13px; font-weight:500; text-decoration:none; }
+  .maps-link:hover { background:#AED6F1; }
+  .notes-list { list-style:none; }
+  .notes-list li { font-size:13px; color:var(--text-muted); padding:5px 0 5px 18px; position:relative; border-bottom:1px solid var(--grey-light); }
+  .notes-list li:last-child { border-bottom:none; }
+  .notes-list li::before { content:"•"; position:absolute; left:0; color:var(--maple); font-weight:bold; }
+  .notes-list li.bold { font-weight:600; color:var(--text); }
+  .notes-list li.warn { color:var(--maple); font-weight:600; }
+  .day-footer { padding:0 24px 20px; }
+  .stat-card { background:white; border-radius:10px; padding:16px; text-align:center; box-shadow:var(--shadow); }
+  .stat-num { font-size:28px; font-weight:700; color:var(--maple); }
+  .stat-label { font-size:12px; color:var(--text-muted); margin-top:4px; }
+  .timeline { position:relative; padding-left:32px; }
+  .timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:var(--grey); }
+  .timeline-item { position:relative; margin-bottom:8px; }
+  .timeline-dot { position:absolute; left:-26px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--maple); border:2px solid white; box-shadow:0 0 0 2px var(--maple); }
+  .timeline-content { background:var(--grey-light); border-radius:8px; padding:10px 14px; }
+  .timeline-date { font-size:11px; color:var(--text-muted); margin-bottom:2px; }
+  .timeline-place { font-size:13px; font-weight:600; }
+  .timeline-hotel { font-size:12px; color:var(--text-muted); }
+  .ave-card { background:var(--green-light); border-radius:8px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; }
+  .ave-name { font-weight:600; font-size:14px; }
+  .ave-num { font-family:monospace; font-size:13px; color:var(--blue); }
+  .ave-exp { font-size:12px; color:var(--text-muted); }
+  /* MAP */
+  .day-map { height:220px; border-radius:0; border-top:1px solid var(--grey); }
+  .etapes-bar { padding:12px 24px; background:var(--grey-light); border-bottom:1px solid var(--grey); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .etapes-bar-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:var(--text-muted); margin-right:4px; }
+  .restos-bar { padding:12px 24px; background:var(--green-light); border-top:1px solid var(--grey); }
+  .restos-bar-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#1A5733; margin-bottom:6px; }
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-thumb { background:var(--grey); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">🍁 Canada 2026</div>
+  <div class="nav-tabs">
+    <a class="nav-tab active" onclick="showSection('accueil',this)">Accueil</a>
+    <a class="nav-tab" onclick="showSection('planning',this)">Planning</a>
+    <a class="nav-tab" onclick="showSection('vols',this)">Vols & Transports</a>
+    <a class="nav-tab" onclick="showSection('activites',this)">Activités</a>
+    <a class="nav-tab" onclick="showSection('infos',this)">Infos pratiques</a>
+  </div>
+</nav>
+
+<!-- ==================== ACCUEIL ==================== -->
+<div id="section-accueil" class="section active">
+  <div class="container">
+    <div class="cover">
+      <div class="cover-flag">🍁</div>
+      <h1>Guide de Voyage Canada</h1>
+      <h2>Québec · Montréal · Ontario · Saguenay</h2>
+      <div class="cover-date">16 juillet — 6 août 2026</div>
+      <div class="cover-family">Julien · Anaïs · Ethan (10 ans) · Milo (5 ans)</div>
+    </div>
+    <div class="grid-4" style="margin-bottom:24px">
+      <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Jours de voyage</div></div>
+      <div class="stat-card"><div class="stat-num">18</div><div class="stat-label">Hôtels réservés</div></div>
+      <div class="stat-card"><div class="stat-num">~3 000</div><div class="stat-label">km en voiture</div></div>
+      <div class="stat-card"><div class="stat-num">4 ✅</div><div class="stat-label">AVE confirmées</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header maple">✈️ Vol aller — BF760</div>
+        <div class="card-body">
+          <div class="info-row"><span class="info-label">Départ</span><span class="info-value">Paris Orly T4 — 19h20</span></div>
+          <div class="info-row"><span class="info-label">Arrivée</span><span class="info-value">Montréal YUL — 21h00</span></div>
+          <div class="info-row"><span class="info-label">Date</span><span class="info-value">16 juillet 2026</span></div>
+          <div class="info-row"><span class="info-label">Vol</span><span class="info-value">BF760 · French Bee · 7h40</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header maple">✈️ Vol retour — BF761</div>
+        <div class="card-body">
+          <div class="info-row"><span class="info-label">Départ</span><span class="info-value">Montréal YUL — 23h00</span></div>
+          <div class="info-row"><span class="info-label">Arrivée</span><span class="info-value">Paris Orly T4 — 12h00</span></div>
+          <div class="info-row"><span class="info-label">Date</span><span class="info-value">6 août 2026</span></div>
+          <div class="info-row"><span class="info-label">Vol</span><span class="info-value">BF761 · French Bee · 7h00</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header blue">🗺️ Itinéraire du road trip</div>
+      <div class="card-body">
+        <div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:16px">Montréal → Belleville → Niagara Falls → Toronto → Ottawa → Mont-Tremblant → Shawinigan → La Tuque → Lac St-Jean → Saguenay → Tadoussac → Québec City → Trois-Rivières → Montréal</div>
+        <div id="global-map" style="height:380px;border-radius:10px;overflow:hidden;margin-bottom:20px;border:1px solid var(--grey)"></div>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">16 juil</div><div class="timeline-place">🛬 Arrivée Montréal</div><div class="timeline-hotel">Comfort Inn Aéroport</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">17 juil</div><div class="timeline-place">🚗 Belleville (via Upper Canada Village · Kingston · Mille-Îles)</div><div class="timeline-hotel">Best Western Belleville — 345 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">18-19 juil</div><div class="timeline-place">🌊 Niagara Falls <span class="badge badge-orange">⚽ Finale CdM</span></div><div class="timeline-hotel">Ramada Plaza + Best Western St. Catharines — 332 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">20-21 juil</div><div class="timeline-place">🏙️ Toronto <span class="badge badge-orange">⚾ Match MLB</span></div><div class="timeline-hotel">Holiday Inn Express Whitby — 190 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">22-23 juil</div><div class="timeline-place">🏛️ Ottawa → Mont-Tremblant (via Parc Oméga)</div><div class="timeline-hotel">Holiday Inn Ottawa + Tremblant — 560 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">24 juil</div><div class="timeline-place">⛰️ Mont-Tremblant (Luge · Tonga Lumina)</div><div class="timeline-hotel">Holiday Inn Tremblant</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">25-26 juil</div><div class="timeline-place">🌲 Shawinigan → La Tuque (Parc de la Mauricie)</div><div class="timeline-hotel">Hotel Marineau Shawinigan + Hotel Marineau La Tuque — 260 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">27-28 juil</div><div class="timeline-place">🏞️ Lac St-Jean → Saguenay (Val-Jalbert)</div><div class="timeline-hotel">Wyndham Roberval + Le Montagnais</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">29-30 juil</div><div class="timeline-place">🐋 Tadoussac <span class="badge badge-blue">Croisière baleines</span></div><div class="timeline-hotel">Motel Chantmartin — 130 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">31 juil – 2 août</div><div class="timeline-place">🏰 Québec City (Canyon Ste-Anne · Chutes Montmorency)</div><div class="timeline-hotel">Sleep Inn Boischatel + Holiday Inn Sainte-Foy — 200 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">3-4 août</div><div class="timeline-place">🏙️ Trois-Rivières → Montréal (Biodôme · Parc Drapeau)</div><div class="timeline-hotel">Super 8 + Holiday Inn Longueuil — 390 km</div></div></div>
+          <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-date">5-6 août</div><div class="timeline-place">🎡 Montréal puis 🛫 Retour Paris — Vol BF761</div><div class="timeline-hotel">Départ Montréal YUL 23h00</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PLANNING ==================== -->
+<div id="section-planning" class="section">
+  <div class="container">
+    <div class="planning-header">
+      <div class="day-counter" id="day-counter">Jour 1 / 22 — Jeudi 16 juillet 2026</div>
+      <div class="planning-nav">
+        <button class="btn btn-secondary" onclick="changeDay(-1)">← Préc.</button>
+        <button class="btn btn-secondary" onclick="changeDay(1)">Suiv. →</button>
+      </div>
+    </div>
+    <div id="day-display"></div>
+  </div>
+</div>
+
+<!-- ==================== VOLS & TRANSPORTS ==================== -->
+<div id="section-vols" class="section">
+  <div class="container">
+    <div class="grid-2">
+      <div class="card"><div class="card-header maple">✈️ Vol aller — BF760</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Vol</span><span class="info-value">BF760 · French Bee</span></div>
+        <div class="info-row"><span class="info-label">Départ</span><span class="info-value">Paris Orly T4 — 19h20</span></div>
+        <div class="info-row"><span class="info-label">Arrivée</span><span class="info-value">Montréal YUL — 21h00</span></div>
+        <div class="info-row"><span class="info-label">Date</span><span class="info-value">Jeudi 16 juillet 2026</span></div>
+        <div class="info-row"><span class="info-label">Classe / Durée</span><span class="info-value">ELIGHT (T) · 7h40</span></div>
+        <div class="info-row"><span class="info-label">Bagages</span><span class="info-value">✅ 1 bagage en soute / personne</span></div>
+      </div></div>
+      <div class="card"><div class="card-header maple">✈️ Vol retour — BF761</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Vol</span><span class="info-value">BF761 · French Bee</span></div>
+        <div class="info-row"><span class="info-label">Départ</span><span class="info-value">Montréal YUL — 23h00</span></div>
+        <div class="info-row"><span class="info-label">Arrivée</span><span class="info-value">Paris Orly T4 — 12h00</span></div>
+        <div class="info-row"><span class="info-label">Date départ</span><span class="info-value">Jeudi 6 août 2026</span></div>
+        <div class="info-row"><span class="info-label">Date arrivée</span><span class="info-value">Vendredi 7 août 2026</span></div>
+        <div class="info-row"><span class="info-label">Classe / Durée</span><span class="info-value">ELIGHT (R) · 7h00</span></div>
+      </div></div>
+    </div>
+    <div class="card"><div class="card-header blue">🅿️ Parking Orly PECO</div><div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="info-row"><span class="info-label">Dates</span><span class="info-value">16 juil 15h00 → 7 août 14h59</span></div>
+          <div class="info-row"><span class="info-label">Montant</span><span class="info-value">144,30 €</span></div>
+        </div>
+        <div><div class="alert alert-info">💡 Navette gratuite. Prévoir 20-30 min jusqu'à l'enregistrement. Vol à 19h20 → fin enregistrement 17h50.</div></div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card-header green">🚗 Voiture de location</div><div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="info-row"><span class="info-label">Véhicule</span><span class="info-value">Hyundai Santa Fe · Auto · 5pl</span></div>
+          <div class="info-row"><span class="info-label">Commande</span><span class="info-value">#355146595</span></div>
+          <div class="info-row"><span class="info-label">Conducteur</span><span class="info-value">Julien Prudenzano</span></div>
+          <div class="info-row"><span class="info-label">Prise en charge</span><span class="info-value">16 juil. 21h00 — YUL</span></div>
+          <div class="info-row"><span class="info-label">Restitution</span><span class="info-value">6 août 21h00 — YUL</span></div>
+          <div class="info-row"><span class="info-label">Montant payé</span><span class="info-value">1 387,80 €</span></div>
+        </div>
+        <div>
+          <div class="alert alert-warn">⚠️ Caution ~2 001 € sur Visa/MC PHYSIQUE au nom de Julien. Vérifier plafond.</div>
+          <div class="alert alert-warn" style="margin-top:8px">⚠️ Rendre avec le plein. Retard +29 min = journée supp.</div>
+        </div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card-header blue">🛂 AVE Canada</div><div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="ave-card"><div><div class="ave-name">Julien Prudenzano</div><div class="ave-exp">Passeport : 22AD15296</div></div><div style="text-align:right"><div class="ave-num">J529114915</div><div class="ave-exp">Expire 03/04/2031</div></div></div>
+        <div class="ave-card"><div><div class="ave-name">Anaïs Aupetit</div><div class="ave-exp">Passeport : 22AI15745</div></div><div style="text-align:right"><div class="ave-num">J529115079</div><div class="ave-exp">Expire 03/04/2031</div></div></div>
+        <div class="ave-card"><div><div class="ave-name">Ethan Prudenzano</div><div class="ave-exp">Passeport : 22AF42897</div></div><div style="text-align:right"><div class="ave-num">J529114759</div><div class="ave-exp">Expire 03/02/2027</div></div></div>
+        <div class="ave-card"><div><div class="ave-name">Milo Prudenzano</div><div class="ave-exp">Passeport : 22AF42898</div></div><div style="text-align:right"><div class="ave-num">J529114699</div><div class="ave-exp">Expire 03/02/2027</div></div></div>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ==================== ACTIVITES ==================== -->
+<div id="section-activites" class="section">
+  <div class="container">
+    <div class="card"><div class="card-header" style="background:#1A6B8A;color:white">🐋 Croisière aux baleines — Tadoussac Autrement</div><div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="info-row"><span class="info-label">Date</span><span class="info-value">Jeudi 30 juillet · 9h00</span></div>
+          <div class="info-row"><span class="info-label">RDV (8h45 !)</span><span class="info-value">Quai Tadoussac, Guérite Zone 1</span></div>
+          <div class="info-row"><span class="info-label">Commande</span><span class="info-value">#12509</span></div>
+          <div class="info-row"><span class="info-label">Montant</span><span class="info-value">528,89 $ CAD ✅</span></div>
+        </div>
+        <div>
+          <div class="alert alert-warn">⚠️ Prévoir traversier + stationnement + marche. Être au quai à 8h45.</div>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=101+Rue+du+Bord+de+l%27Eau+Tadoussac+QC" target="_blank" class="maps-link" style="margin-top:12px">📍 Quai de Tadoussac</a>
+        </div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card-header" style="background:#1A3A6B;color:white">⚾ Match MLB — Blue Jays vs Rays</div><div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="info-row"><span class="info-label">Date</span><span class="info-value">Mardi 21 juillet · 19h07</span></div>
+          <div class="info-row"><span class="info-label">Stade</span><span class="info-value">Rogers Centre, Toronto</span></div>
+          <div class="info-row"><span class="info-label">Places</span><span class="info-value">Sec 515, Rg 15, Sièges 1-4</span></div>
+          <div class="info-row"><span class="info-label">Montant</span><span class="info-value">157,56 $ CAD ✅</span></div>
+        </div>
+        <div>
+          <div class="alert alert-success">🌭 Loonie Dogs Night — Hotdogs à 1$ !</div>
+          <div class="alert alert-info" style="margin-top:8px">💡 Billets mobiles sur app MLB Ballpark.</div>
+        </div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card-header" style="background:#1A6B8A;color:white">🚢 Croisière Niagara City Cruises</div><div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="info-row"><span class="info-label">Date</span><span class="info-value">Dimanche 19 juillet</span></div>
+          <div class="info-row"><span class="info-label">Adulte</span><span class="info-value">47,95 $ CAD</span></div>
+          <div class="info-row"><span class="info-label">Enfant 3-12 ans</span><span class="info-value">32,95 $ CAD</span></div>
+          <div class="info-row"><span class="info-label">Adresse</span><span class="info-value">5920 Niagara Parkway</span></div>
+        </div>
+        <div>
+          <div class="alert alert-info">💡 Poncho rouge fourni. Ouvert dès 8h30. Pas de créneau fixe.</div>
+          <a href="https://www.niagaraparks.com/visit/attractions/niagara-city-cruises/" target="_blank" class="maps-link" style="margin-top:12px">🎟️ Réserver NiagaraParks.com</a>
+        </div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card-header" style="background:#2C7A3A;color:white">⚽ Finale Coupe du Monde — Fan Zone Niagara Falls</div><div class="card-body">
+      <div class="info-row"><span class="info-label">Date</span><span class="info-value">Dimanche 19 juillet</span></div>
+      <div class="info-row"><span class="info-label">Coup d'envoi</span><span class="info-value">15h00 heure locale</span></div>
+      <div class="info-row"><span class="info-label">Lieu</span><span class="info-value">Fan Zone by the Falls — Queen Victoria Park</span></div>
+      <div class="info-row"><span class="info-label">Horaires spéciaux</span><span class="info-value">10h00 – 18h00 (Canada Celebrates)</span></div>
+      <div class="alert alert-success" style="margin-top:8px">✅ Accès gratuit — écrans géants en plein air</div>
+    </div></div>
+    <div class="card"><div class="card-header" style="background:#5B2D8E;color:white">✨ Tonga Lumina — Mont-Tremblant</div><div class="card-body">
+      <div class="info-row"><span class="info-label">Date</span><span class="info-value">Vendredi 24 juillet (en soirée)</span></div>
+      <div class="info-row"><span class="info-label">Durée</span><span class="info-value">45-60 min · sentier 1,5 km en forêt</span></div>
+      <div class="info-row"><span class="info-label">Billets</span><span class="info-value">Adulte ~30 $ · Enfant 4-15 ans ~19 $</span></div>
+      <div class="alert alert-warn" style="margin-top:8px">⚠️ Achat à l'avance fortement recommandé.</div>
+      <a href="https://tongalumina.tremblant.ca" target="_blank" class="maps-link" style="margin-top:8px">🎟️ tongalumina.tremblant.ca</a>
+    </div></div>
+  </div>
+</div>
+
+<!-- ==================== INFOS PRATIQUES ==================== -->
+<div id="section-infos" class="section">
+  <div class="container">
+    <div class="grid-2">
+      <div class="card"><div class="card-header blue">💰 Budget & Paiement</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Monnaie</span><span class="info-value">Dollar canadien (CAD)</span></div>
+        <div class="info-row"><span class="info-label">Taux approx.</span><span class="info-value">1 EUR ≈ 1,45 CAD</span></div>
+        <div class="alert alert-info" style="margin-top:8px">💡 Visa/Mastercard acceptées partout. Prévoir quelques dollars en liquide.</div>
+      </div></div>
+      <div class="card"><div class="card-header blue">🌡️ Météo juillet-août</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Température</span><span class="info-value">20 à 30°C</span></div>
+        <div class="info-row"><span class="info-label">Soirées</span><span class="info-value">Fraîches en forêt et bord de fleuve</span></div>
+        <div class="alert alert-info" style="margin-top:8px">💡 Crème solaire, chapeaux. Répulsif moustiques pour Mauricie et Lac St-Jean.</div>
+      </div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><div class="card-header blue">🚗 Conduite au Canada</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Autoroute</span><span class="info-value">100 km/h</span></div>
+        <div class="info-row"><span class="info-label">Route</span><span class="info-value">80 km/h</span></div>
+        <div class="info-row"><span class="info-label">Ville</span><span class="info-value">50 km/h</span></div>
+        <div class="info-row"><span class="info-label">Permis</span><span class="info-value">Français accepté</span></div>
+        <div class="alert alert-warn" style="margin-top:8px">⚠️ STOP = arrêt complet obligatoire. Voies non pavées interdites.</div>
+      </div></div>
+      <div class="card"><div class="card-header blue">📱 Applications utiles</div><div class="card-body">
+        <div class="info-row"><span class="info-label">Google Maps</span><span class="info-value">Télécharger cartes hors-ligne</span></div>
+        <div class="info-row"><span class="info-label">MLB Ballpark</span><span class="info-value">Billets match Blue Jays</span></div>
+        <div class="info-row"><span class="info-label">Météo Canada</span><span class="info-value">Météo locale fiable</span></div>
+      </div></div>
+    </div>
+    <div class="card"><div class="card-header maple">📞 Contacts d'urgence</div><div class="card-body">
+      <table>
+        <tr><th>Service</th><th>Contact</th><th>Note</th></tr>
+        <tr><td>🚨 Urgences Canada</td><td><strong>911</strong></td><td>Police, pompiers, SAMU</td></tr>
+        <tr><td>✈️ French Bee</td><td>+33 1 76 54 05 05</td><td>Compagnie aérienne</td></tr>
+        <tr><td>🚗 Location voiture</td><td>Commande #355146595</td><td>julien.prudenzano@gmail.com</td></tr>
+        <tr><td>🐋 Tadoussac Autrement</td><td>Commande #12509</td><td>Croisière 30 juillet</td></tr>
+        <tr><td>🇫🇷 Ambassade France</td><td>+1 613 789 1795</td><td>Ottawa</td></tr>
+      </table>
+    </div></div>
+    <div class="card"><div class="card-header green">👨‍👩‍👧‍👦 Conseils famille</div><div class="card-body">
+      <div class="info-row"><span class="info-label">Ethan (10 ans)</span><span class="info-value">Prévoir jeux, livres pour les longs trajets</span></div>
+      <div class="info-row"><span class="info-label">Milo (5 ans)</span><span class="info-value">Pauses fréquentes toutes les 2h</span></div>
+      <div class="info-row"><span class="info-label">Sièges auto</span><span class="info-value">Vérifier avec le loueur de voiture</span></div>
+      <div class="info-row"><span class="info-label">Parcs Canada</span><span class="info-value">Programme "Castors Curieux" pour 4-6 ans (Milo!)</span></div>
+    </div></div>
+  </div>
+</div>
+
+<script>
+// ===== DONNÉES =====
+const days = [
+  { jour:1, date:"Jeudi 16 juillet 2026", emoji:"✈️", de:"Paris Orly", a:"Montréal",
+    trajet:"Vol 7h40 (6 000 km)",
+    hotel:"Comfort Inn Aéroport", adresse:"340 av Michel Jasmin, Dorval, QC", resa:"72076611558319", pool:false, dejeuner:true,
+    from:"Paris Orly Terminal 4, Orly, France",
+    to:"Comfort Inn Aéroport, 340 avenue Michel Jasmin, Dorval, QC, Canada",
+    color:"#C0392B",
+    mapCenter:[45.47,-73.74], mapZoom:11,
+    mapPoints:[{lat:48.7233,lng:2.3794,label:"Paris Orly T4",icon:"✈️"},{lat:45.4657,lng:-73.7451,label:"Montréal YUL",icon:"🛬"}],
+    etapes:["✈️ Paris Orly T4 (19h20)","🛬 Montréal YUL (21h00)","🚗 Prise voiture location"],
+    restos:["Walmart Dorval (à 5 min de l'hôtel)"],
+    notes:[{t:"15h00 — Dépôt voiture Parking Orly PECO",b:false},{t:"17h50 — Fin d'enregistrement Orly T4",b:false},{t:"19h20 — Décollage vol BF760 French Bee (7h40)",b:false},{t:"21h00 — Arrivée Montréal YUL (heure locale)",b:false},{t:"21h00 — Prise en charge voiture location au comptoir YUL",b:false}]},
+
+  { jour:2, date:"Vendredi 17 juillet 2026", emoji:"🚗", de:"Montréal", a:"Belleville",
+    trajet:"~350 km · 3h30 (autoroute 401)",
+    hotel:"Best Western Belleville", adresse:"387 North Front St, Belleville, ON", resa:"3813867262", pool:true, dejeuner:true,
+    from:"Comfort Inn Aéroport, 340 avenue Michel Jasmin, Dorval, QC, Canada",
+    to:"Best Western Belleville, 387 North Front St, Belleville, ON, Canada",
+    color:"#2471A3",
+    mapCenter:[44.5,-76.0], mapZoom:7,
+    mapPoints:[{lat:45.4657,lng:-73.7451,label:"Montréal",icon:"🏙️"},{lat:44.9963,lng:-74.964,label:"Walmart Dorval",icon:"🛒"},{lat:44.9817,lng:-74.958,label:"Upper Canada Village",icon:"🏛️"},{lat:44.2312,lng:-76.486,label:"Kingston",icon:"🏰"},{lat:44.3391,lng:-76.1305,label:"Gananoque (Mille-Îles)",icon:"🚢"},{lat:44.3573,lng:-76.8617,label:"Sandbanks Prov. Park",icon:"🏖️"},{lat:44.1634,lng:-77.3833,label:"Belleville",icon:"🏨"}],
+    etapes:["🛒 Walmart Dorval — courses","🏛️ Upper Canada Village","🏰 Kingston","🚢 Croisière Mille-Îles (Gananoque)","🏖️ Sandbanks Provincial Park"],
+    restos:["Walmart Belleville (à 5 min de l'hôtel)"],
+    notes:[{t:"🛒 Arrêt Walmart à Dorval — plein de nourriture et boissons pour le road trip",b:false},{t:"🏛️ Upper Canada Village : village-musée vivant du 19e siècle, idéal en famille",b:false},{t:"🏰 Kingston : vieille capitale du Canada, Fort Henry, front de mer",b:false},{t:"🚢 Croisière des Mille-Îles depuis Gananoque ou Rockport — paysages époustouflants",b:false},{t:"🏖️ Sandbanks Provincial Park (légèrement au sud de la route) : plus grandes dunes de sable d'eau douce au monde",b:false}]},
+
+  { jour:3, date:"Samedi 18 juillet 2026", emoji:"🌊", de:"Belleville", a:"Niagara Falls",
+    trajet:"~320 km · 3h00 (autoroute 401 puis QEW)",
+    hotel:"Ramada Plaza by Wyndham Niagara Falls", adresse:"7389 Lundy's Lane, Niagara Falls, ON", resa:"3813856422", pool:true, dejeuner:false,
+    from:"Best Western Belleville, 387 North Front St, Belleville, ON, Canada",
+    to:"Ramada Plaza by Wyndham Niagara Falls, 7389 Lundy's Lane, Niagara Falls, ON, Canada",
+    color:"#2471A3",
+    mapCenter:[43.6,-78.8], mapZoom:7,
+    mapPoints:[{lat:44.1634,lng:-77.3833,label:"Belleville",icon:"🏁"},{lat:44.05,lng:-77.878,label:"Presqu'ile Prov. Park",icon:"🌿"},{lat:43.9609,lng:-78.1662,label:"Cobourg",icon:"☕"},{lat:43.0896,lng:-79.0849,label:"Clifton Hill",icon:"🎢"},{lat:43.0962,lng:-79.0744,label:"Illuminations des chutes",icon:"✨"}],
+    etapes:["🌿 Presqu'ile Provincial Park (Brighton)","☕ Cobourg","🎢 Clifton Hill","✨ Illuminations des chutes (soirée)"],
+    restos:["Walmart Niagara Falls (Lundy's Lane, proche hôtel)"],
+    notes:[{t:"🌿 Presqu'ile Provincial Park (Brighton) : belles plages sur le lac Ontario, baignade pour les enfants",b:false},{t:"☕ Cobourg : jolie ville au bord du lac Ontario, pause déjeuner",b:false},{t:"🎢 Arrivée Niagara Falls et balade sur Clifton Hill",b:false},{t:"✨ Spectacle des illuminations nocturnes des chutes (gratuit, dès la tombée de la nuit)",b:false}]},
+
+  { jour:4, date:"Dimanche 19 juillet 2026", emoji:"⚽", de:"Niagara Falls", a:"St. Catharines",
+    trajet:"~20 km · 20 min (journée sur place)",
+    hotel:"Best Western St. Catharines", adresse:"2 North Service Rd, St. Catharines, ON", resa:"72076611728766", pool:true, dejeuner:true,
+    from:"Ramada Plaza by Wyndham Niagara Falls, 7389 Lundy's Lane, Niagara Falls, ON, Canada",
+    to:"Best Western St. Catharines, 2 North Service Rd, St. Catharines, ON, Canada",
+    color:"#B7410E",
+    mapCenter:[43.09,-79.07], mapZoom:13,
+    mapPoints:[{lat:43.0829,lng:-79.0746,label:"Table Rock Centre",icon:"🏛️"},{lat:43.0896,lng:-79.0849,label:"Clifton Hill",icon:"🎢"},{lat:43.0862,lng:-79.0725,label:"Journey Behind the Falls",icon:"💧"},{lat:43.0799,lng:-79.073,label:"White Water Walk",icon:"🌊"},{lat:43.0764,lng:-79.0729,label:"Niagara Parks Power Station",icon:"⚡"},{lat:43.0837,lng:-79.0747,label:"Niagara City Cruises",icon:"🚢"},{lat:43.0908,lng:-79.0727,label:"Fan Zone — Queen Victoria Park",icon:"⚽"}],
+    etapes:["🏛️ Table Rock Centre","💧 Journey Behind the Falls","🌊 White Water Walk","⚡ Niagara Parks Power Station","🚢 Croisière Niagara City Cruises","⚽ Fan Zone — Finale CdM (15h00)","🎢 Clifton Hill (soirée)"],
+    note_logistique:"💡 Journée chargée ! Avec la finale à 15h00, priorisez les visites le matin : Table Rock, Journey Behind et la croisière en priorité. White Water Walk et Power Station peuvent attendre une 2e matinée.",
+    restos:["Walmart St. Catharines"],
+    notes:[{t:"🏛️ Table Rock Centre : point de vue au bord des Horseshoe Falls, resto et boutiques",b:false},{t:"💧 Journey Behind the Falls : tunnels dans la roche, vue unique depuis derrière la chute",b:false},{t:"🌊 White Water Walk : promenade en planches au bord des rapides de classe 6 (4330 River Rd)",b:false},{t:"⚡ Niagara Parks Power Station + Tunnel : ancienne centrale, descente 180 pieds jusqu'à la rivière",b:false},{t:"🚢 Croisière Niagara City Cruises (20 min, poncho fourni) — réserver sur niagaracitycruises.com — Adulte 47,95 $ · Enfant 32,95 $",b:false},{t:"⚽ FINALE COUPE DU MONDE à 15h00 — Fan Zone Queen Victoria Park, accès gratuit, écrans géants",b:false}]},
+
+  { jour:5, date:"Lundi 20 juillet 2026", emoji:"🏙️", de:"St. Catharines", a:"Toronto (Whitby)",
+    trajet:"~160 km · 1h40 (autoroute QEW puis 401 est)",
+    hotel:"Holiday Inn Express Whitby", adresse:"180 Consumers Dr, Whitby, ON", resa:"72076611831533", pool:false, dejeuner:true,
+    from:"Best Western St. Catharines, 2 North Service Rd, St. Catharines, ON, Canada",
+    to:"Holiday Inn Express Whitby, 180 Consumers Dr, Whitby, ON, Canada",
+    color:"#2471A3",
+    mapCenter:[43.5,-79.4], mapZoom:8,
+    mapPoints:[{lat:43.2553,lng:-79.0716,label:"Outlet Collection at Niagara",icon:"🛍️"},{lat:43.2575,lng:-79.0636,label:"Niagara-on-the-Lake",icon:"🍷"},{lat:43.4818,lng:-79.9039,label:"Springridge Farm (Milton)",icon:"🚜"},{lat:43.6532,lng:-79.3832,label:"Toronto by night",icon:"🌃"},{lat:43.8975,lng:-78.9428,label:"Whitby",icon:"🏨"}],
+    etapes:["🛍️ Outlet Collection at Niagara","🍷 Niagara-on-the-Lake","🚜 Springridge Farm (Milton)","🌃 Toronto by night"],
+    restos:["Walmart Whitby (Thickson Rd, proche hôtel)"],
+    notes:[{t:"🛍️ Outlet Collection at Niagara : Coach, Nike, Tommy Hilfiger, Carter's OshKosh",b:false},{t:"🍷 Niagara-on-the-Lake : village fleuri, glaciers, bord du lac Ontario",b:false},{t:"🚜 Springridge Farm (Milton) : ferme familiale avec animaux, jeux enfants, boulangerie — bel arrêt sur la QEW",b:false},{t:"🌃 Toronto by night si arrivée avant 21h : CN Tower illuminée, Harbourfront",b:false}]},
+
+  { jour:6, date:"Mardi 21 juillet 2026", emoji:"⚾", de:"Toronto", a:"Toronto",
+    trajet:"~50 km · 40 min (Whitby → Toronto centre)",
+    hotel:"Holiday Inn Express Whitby", adresse:"180 Consumers Dr, Whitby, ON", resa:"72076611831533", pool:false, dejeuner:true,
+    from:"Holiday Inn Express Whitby, 180 Consumers Dr, Whitby, ON, Canada",
+    to:"Rogers Centre, 1 Blue Jays Way, Toronto, ON, Canada",
+    color:"#B7410E",
+    mapCenter:[43.645,-79.39], mapZoom:13,
+    mapPoints:[{lat:43.6426,lng:-79.3871,label:"Tour CN",icon:"🗼"},{lat:43.6397,lng:-79.3906,label:"Ripley's Aquarium",icon:"🐠"},{lat:43.7745,lng:-79.3318,label:"Legoland Discovery Center",icon:"🧱"},{lat:43.7181,lng:-79.3382,label:"Centre des Sciences Ontario",icon:"🔬"},{lat:43.6561,lng:-79.3812,label:"Little Canada",icon:"🍁"},{lat:43.6472,lng:-79.3773,label:"Temple de la Renommée du Hockey",icon:"🏒"},{lat:43.6387,lng:-79.3816,label:"Harbourfront Centre",icon:"🌊"},{lat:43.6414,lng:-79.3894,label:"Rogers Centre (19h07)",icon:"⚾"}],
+    etapes:["🚆 GO Train Whitby → Union Station (60 min)","🗼 Tour CN","🐠 Ripley's Aquarium","🧱 Legoland Discovery Center","🔬 Centre des Sciences Ontario","🍁 Little Canada","🏒 Temple Renommée Hockey","⚾ Rogers Centre — Match MLB (19h07)"],
+    restos:["Walmart Whitby (proche hôtel)"],
+    notes:[{t:"🚆 GO Train Whitby → Union Station (60 min) — option pratique pour éviter le trafic de Toronto",b:false},{t:"🗼 Tour CN : vue panoramique, plancher de verre (vertige garanti !)",b:false},{t:"🐠 Ripley's Aquarium of Canada : juste à côté de la CN Tower, idéal pour les enfants",b:false},{t:"🧱 Legoland Discovery Center : expérience Lego immersive, idéal pour Ethan et Milo — Fairview Mall, 1800 Sheppard Ave E",b:false},{t:"🔬 Centre des Sciences de l'Ontario (Ontario Science Centre) : expositions interactives sur les sciences et la technologie — 770 Don Mills Rd",b:false},{t:"🍁 Little Canada : maquette géante du Canada miniature à découvrir en famille — 10 Dundas St E, Toronto",b:false},{t:"🏒 Temple de la Renommée du Hockey (Hockey Hall of Fame) : musée incontournable, coupe Stanley, galerie des légendes — 30 Yonge St",b:false},{t:"🌊 Harbourfront Centre : bord du lac Ontario, animations d'été",b:false},{t:"19h07 — ⚾ MATCH MLB : Blue Jays vs Tampa Bay Rays — Section 515, Rangée 15, Sièges 1-4",b:false},{t:"🌭 Loonie Dogs Night — Hotdogs à 1$ pour les enfants !",b:false}]},
+
+  { jour:7, date:"Mercredi 22 juillet 2026", emoji:"🏛️", de:"Toronto (Whitby)", a:"Ottawa",
+    trajet:"~400 km · 4h00 (autoroutes 401 puis 416)",
+    hotel:"Holiday Inn Express & Suites Downtown Ottawa East", adresse:"235 King Edward Ave, Ottawa, ON", resa:"72076611943175", pool:true, dejeuner:true,
+    from:"Holiday Inn Express Whitby, 180 Consumers Dr, Whitby, ON, Canada",
+    to:"Holiday Inn Express & Suites Downtown Ottawa East, 235 King Edward Avenue, Ottawa, ON, Canada",
+    color:"#2471A3",
+    mapCenter:[43.9,-76.5], mapZoom:7,
+    mapPoints:[{lat:43.8975,lng:-78.9428,label:"Whitby",icon:"🏁"},{lat:43.5448,lng:-78.8496,label:"Toronto Premium Outlets",icon:"🛍️"},{lat:45.4215,lng:-75.6972,label:"Ottawa",icon:"🏙️"},{lat:45.4248,lng:-75.6996,label:"Parlement",icon:"🏛️"},{lat:45.4267,lng:-75.6962,label:"Écluses canal Rideau",icon:"🌊"},{lat:45.4275,lng:-75.6951,label:"Major's Hill Park",icon:"🌳"},{lat:45.4295,lng:-75.6895,label:"ByWard Market",icon:"🛍️"}],
+    etapes:["🛍️ Toronto Premium Outlets (Halton Hills)","🏛️ Parlement d'Ottawa","🌊 Écluses du canal Rideau","🌳 Major's Hill Park","🛍️ ByWard Market"],
+    restos:["Costco Oshawa (sur la route, sortie 401)","Walmart Ottawa (Rideau)"],
+    notes:[{t:"🛍️ Toronto Premium Outlets (Halton Hills) : 130+ boutiques, détour ouest depuis Whitby avant de prendre la route vers Ottawa",b:false},{t:"🏛️ Parlement d'Ottawa : relève de la garde en été, visite extérieure",b:false},{t:"🌊 Écluses du canal Rideau : 8 écluses historiques site UNESCO, pied du Château Laurier",b:false},{t:"🌳 Major's Hill Park : vue sur la rivière des Outaouais",b:false},{t:"🛍️ ByWard Market : marché animé, restos et glaciers en soirée",b:false}]},
+
+  { jour:8, date:"Jeudi 23 juillet 2026", emoji:"🦌", de:"Ottawa", a:"Mont-Tremblant",
+    trajet:"~170 km · 2h00 (route 148 puis 117)",
+    hotel:"Holiday Inn Express and Suites Tremblant", adresse:"160 ch. du Curé Deslauriers, Mont-Tremblant, QC", resa:"3813857498", pool:false, dejeuner:true,
+    from:"Holiday Inn Express & Suites Downtown Ottawa East, 235 King Edward Avenue, Ottawa, ON, Canada",
+    to:"Holiday Inn Express and Suites Tremblant, 160 chemin du Curé Deslauriers, Mont-Tremblant, QC, Canada",
+    color:"#1E6B3A",
+    mapCenter:[46.0,-75.4], mapZoom:7,
+    mapPoints:[{lat:45.4215,lng:-75.6972,label:"Ottawa",icon:"🏁"},{lat:45.5,lng:-75.89,label:"Lac Pink (Gatineau)",icon:"🌳"},{lat:45.64,lng:-75.93,label:"Plage O'Brien (Lac Meech)",icon:"🏖️"},{lat:45.6667,lng:-75.9167,label:"Gatineau — Walmart",icon:"🛒"},{lat:46.35,lng:-74.9167,label:"Parc Oméga (Montebello)",icon:"🦌"},{lat:46.4167,lng:-74.9,label:"Village Montebello (Château)",icon:"🏰"},{lat:46.1167,lng:-74.5833,label:"Mont-Tremblant",icon:"🏔️"}],
+    etapes:["🌳 Lac Pink — Belvédère (Gatineau)","🏖️ Plage O'Brien, Lac Meech","🦌 Parc Oméga (Montebello)","🏰 Village Montebello (Château)","🌅 Coucher de soleil sur le lac"],
+    restos:["Walmart Gatineau (avant de quitter Ottawa)"],
+    notes:[{t:"🌳 Lac Pink (Parc de la Gatineau) : lac aux eaux claires avec belvédère, courte randonnée facile",b:false},{t:"🏖️ Plage O'Brien (Lac Meech) : superbe plage de lac dans le parc de la Gatineau",b:false},{t:"🦌 Parc Oméga (Montebello) : safari en voiture, loups, ours, bisons, wapitis — env. 3-4h",b:false},{t:"🏰 Village de Montebello : balade, Château Montebello (plus grande structure en bois rond du monde)",b:false},{t:"🌅 Coucher de soleil sur le lac à l'arrivée à Mont-Tremblant",b:false}]},
+
+  { jour:9, date:"Vendredi 24 juillet 2026", emoji:"⛰️", de:"Mont-Tremblant", a:"Mont-Tremblant",
+    trajet:"Journée sur place — 0 km",
+    hotel:"Holiday Inn Express and Suites Tremblant", adresse:"160 ch. du Curé Deslauriers, Mont-Tremblant, QC", resa:"3813857498", pool:false, dejeuner:true,
+    from:"Holiday Inn Express and Suites Tremblant, 160 chemin du Curé Deslauriers, Mont-Tremblant, QC, Canada",
+    to:"Holiday Inn Express and Suites Tremblant, 160 chemin du Curé Deslauriers, Mont-Tremblant, QC, Canada",
+    color:"#1E6B3A",
+    mapCenter:[46.12,-74.59], mapZoom:13,
+    mapPoints:[{lat:46.1167,lng:-74.5833,label:"Télécabine panoramique",icon:"🚡"},{lat:46.1167,lng:-74.585,label:"Skyline Luge",icon:"🛝"},{lat:46.115,lng:-74.592,label:"Plage du Lac Tremblant",icon:"🏖️"},{lat:46.116,lng:-74.59,label:"Aquaclub La Source",icon:"🏊"},{lat:46.1167,lng:-74.585,label:"Tonga Lumina (soirée)",icon:"✨"}],
+    etapes:["🚡 Télécabine panoramique","🛝 Skyline Luge (forfait multi-activités)","🏖️ Plage du Lac Tremblant","🏊 Aquaclub La Source","✨ Tonga Lumina (soirée)","🌅 Coucher de soleil sur le lac"],
+    restos:["Walmart Sainte-Agathe-des-Monts (25 min)"],
+    notes:[{t:"🚡 Télécabine panoramique : montée au sommet, vues sur les Laurentides",b:false},{t:"🛝 Skyline Luge : glissade en luge sur rail — forfait combiné télécabine + luge recommandé",b:false},{t:"🏖️ Plage du Lac Tremblant : baignade et farniente",b:false},{t:"🏊 Aquaclub La Source : parc aquatique de la station",b:false},{t:"✨ Tonga Lumina en soirée : parcours nocturne illuminé 1,5 km en forêt — réserver sur tongalumina.tremblant.ca",b:false},{t:"🌅 Coucher de soleil sur le lac",b:false}]},
+
+  { jour:10, date:"Samedi 25 juillet 2026", emoji:"🍁", de:"Mont-Tremblant", a:"Shawinigan",
+    trajet:"~280 km · 3h00 (routes 117 puis 40/55)",
+    hotel:"Hotel Marineau Shawinigan", adresse:"2223 rue Hanna, Shawinigan, QC", resa:"72071815028515", pool:false, dejeuner:true,
+    from:"Holiday Inn Express and Suites Tremblant, 160 chemin du Curé Deslauriers, Mont-Tremblant, QC, Canada",
+    to:"Hotel Marineau Shawinigan, 2223 rue Hanna, Shawinigan, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[46.5,-74.0], mapZoom:7,
+    mapPoints:[{lat:46.1167,lng:-74.5833,label:"Mont-Tremblant",icon:"🏁"},{lat:46.071,lng:-74.605,label:"Sentier des Cimes (Mont-Blanc)",icon:"🌳"},{lat:45.9,lng:-74.12,label:"Érablière La Cabane à Tuque",icon:"🍁"},{lat:45.9,lng:-74.12,label:"Walmart Sainte-Agathe",icon:"🛒"},{lat:45.73,lng:-73.73,label:"Parc Aquatique Saint-Sauveur",icon:"🏊"},{lat:46.42,lng:-72.87,label:"Parc régional Chute-à-Bull",icon:"💧"},{lat:46.55,lng:-72.75,label:"Cité de l'Énergie",icon:"⚡"},{lat:46.5479,lng:-72.7479,label:"Shawinigan",icon:"🏨"}],
+    etapes:["🌳 Sentier des Cimes Laurentides (Mont-Blanc)","🍁 Érablière La Cabane à Tuque","🏊 Parc Aquatique Saint-Sauveur","💧 Parc régional de la Chute-à-Bull","⚡ Cité de l'Énergie"],
+    restos:["Walmart Shawinigan (proche hôtel)"],
+    notes:[{t:"🌳 Sentier des Cimes Laurentides (Mont-Blanc, à 20 min de Tremblant sur la route 117) : promenade de 2,7 km à la cime des arbres, tour panoramique à 40 m, filet suspendu, glissade 53 m — Adulte 33,90 $ · Enfant 6-17 ans 20,90 $ — Réservation conseillée sur sentierdescimes.ca",b:false},{t:"🍁 Érablière La Cabane à Tuque : sirop d'érable, ambiance authentique québécoise",b:false},{t:"🏊 Parc Aquatique Saint-Sauveur : glissades d'eau, idéal pour les enfants (en route vers Shawinigan)",b:false},{t:"💧 Parc régional de la Chute-à-Bull : belle chute en forêt, sentier accessible",b:false},{t:"⚡ Cité de l'Énergie : ancienne usine reconvertie, tour panoramique sur Shawinigan",b:false}]},
+
+  { jour:11, date:"Dimanche 26 juillet 2026", emoji:"🌲", de:"Shawinigan", a:"La Tuque",
+    trajet:"~130 km · 1h20 (route 155)",
+    hotel:"Hotel Marineau La Tuque", adresse:"3250 Boul. Ducharme, La Tuque, QC", resa:"72076612182364", pool:false, dejeuner:false,
+    from:"Hotel Marineau Shawinigan, 2223 rue Hanna, Shawinigan, QC, Canada",
+    to:"Hotel Marineau La Tuque, 3250 Boulevard Ducharme, La Tuque, QC, Canada",
+    color:"#1E6B3A",
+    mapCenter:[46.8,-72.9], mapZoom:8,
+    mapPoints:[{lat:46.5479,lng:-72.7479,label:"Shawinigan",icon:"🏁"},{lat:47.4167,lng:-72.7833,label:"La Tuque — Base Hydravion",icon:"✈️"},{lat:46.72,lng:-72.88,label:"Parc National de la Mauricie",icon:"🌲"},{lat:46.78,lng:-72.9,label:"Halte Pointe-à-la-Mine",icon:"🏞️"},{lat:46.82,lng:-72.92,label:"Lac Wapizagonke (plage)",icon:"🏖️"},{lat:46.9,lng:-72.93,label:"Parc de la rivière Saint-Maurice",icon:"🏕️"},{lat:47.0,lng:-72.77,label:"Parc chutes Petite rivière Bostonnais",icon:"💧"},{lat:47.27,lng:-72.79,label:"Lac Édouard",icon:"💎"},{lat:47.4167,lng:-72.7833,label:"La Tuque",icon:"🏨"}],
+    etapes:["✈️ Hydravion Québec (La Tuque)","🌲 Parc National de la Mauricie","🏞️ Halte Pointe-à-la-Mine","🏖️ Plage Lac Wapizagonke","🏕️ Parc rivière Saint-Maurice","💧 Parc chutes Petite rivière Bostonnais","💎 Lac Édouard"],
+    restos:["Pas de Walmart/Costco à La Tuque — faire les courses à Shawinigan avant de partir"],
+    notes:[{t:"✈️ Survol en Hydravion depuis La Tuque : Bel Air 146 $ / pers. · Hydravion Aventure 155 $ / pers. (soit ~584-620 $ pour 4) — 45 min de vol sur la Mauricie et la rivière Saint-Maurice",b:false},{t:"🌲 Parc National de la Mauricie : randonnée 'Les Cascades' (sentier accessible en famille, cascades et piscines naturelles) · canoë · baignade — Programme Castors Curieux pour Milo !",b:false},{t:"🏞️ Halte de la Pointe-à-la-Mine : point de vue sur la rivière, pique-nique",b:false},{t:"🏖️ Plage du Lac Wapizagonke : superbe lac de baignade dans le parc national",b:false},{t:"🏕️ Parc de la rivière Saint-Maurice : sentiers en bord de rivière",b:false},{t:"💧 Parc des chutes de la Petite rivière Bostonnais : chute accessible",b:false},{t:"💎 Lac Édouard : lac de montagne, paysage sauvage",b:false},{t:"Nuit en chalet au bord de la rivière Saint-Maurice",b:false}]},
+
+  { jour:12, date:"Lundi 27 juillet 2026", emoji:"🏞️", de:"La Tuque", a:"Lac Saint-Jean",
+    trajet:"~270 km · 3h00 (routes 155 puis 169)",
+    hotel:"Travelodge by Wyndham Roberval", adresse:"19 boul. de l'Anse, Roberval, QC", resa:"18444446614", pool:true, dejeuner:true,
+    from:"Hotel Marineau La Tuque, 3250 Boulevard Ducharme, La Tuque, QC, Canada",
+    to:"Travelodge by Wyndham Roberval, 19 boulevard de l'Anse, Roberval, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[48.2,-72.5], mapZoom:7,
+    mapPoints:[{lat:47.4167,lng:-72.7833,label:"La Tuque",icon:"🏁"},{lat:48.46,lng:-71.97,label:"Val-Jalbert",icon:"🏛️"},{lat:48.52,lng:-72.22,label:"Roberval — Lac Saint-Jean",icon:"🏨"}],
+    etapes:["🏛️ Village historique de Val-Jalbert","🏖️ Plage du Lac Saint-Jean"],
+    restos:["Walmart Alma (30 min de Roberval)"],
+    notes:[{t:"🏛️ Village historique de Val-Jalbert : village industriel abandonné, chute spectaculaire, téléphérique panoramique",b:false},{t:"Arrivée à Roberval sur les rives du Lac Saint-Jean — plus grand lac naturel du Québec",b:false},{t:"Plage et baignade au lac en fin de journée",b:false}]},
+
+  { jour:13, date:"Mardi 28 juillet 2026", emoji:"🌊", de:"Lac Saint-Jean", a:"Saguenay",
+    trajet:"~75 km · 1h00 (route 170 ou 175)",
+    hotel:"Le Montagnais", adresse:"1080 Boul. Talbot, Saguenay, QC", resa:"72072455006324", pool:true, dejeuner:false,
+    from:"Auberge de la Pointe Wyndham Roberval, 19 boulevard de l'Anse, Roberval, QC, Canada",
+    to:"Le Montagnais, 1080 Boulevard Talbot, Saguenay, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[48.55,-71.65], mapZoom:8,
+    mapPoints:[{lat:48.52,lng:-72.22,label:"Roberval",icon:"🏁"},{lat:48.74,lng:-71.82,label:"Parc de la Pointe-Taillon",icon:"🏖️"},{lat:48.58,lng:-71.63,label:"Parc le Trou de la Fée",icon:"💎"},{lat:48.42,lng:-71.07,label:"Centre plein air Bec-Scie",icon:"🥾"},{lat:48.43,lng:-71.07,label:"Saguenay — Walmart/Costco",icon:"🛒"},{lat:48.42,lng:-71.07,label:"Le Montagnais",icon:"🏨"}],
+    etapes:["🏖️ Parc de la Pointe-Taillon","💎 Parc le Trou de la Fée","🥾 Centre plein air Bec-Scie"],
+    restos:["Walmart Saguenay (Chicoutimi)","Costco Saguenay"],
+    notes:[{t:"🏖️ Parc de la Pointe-Taillon : grande plage de sable et piste cyclable sur le Lac Saint-Jean",b:false},{t:"💎 Parc le Trou de la Fée : canyon spectaculaire avec pont suspendu",b:false},{t:"🥾 Centre plein air Bec-Scie : sentiers de randonnée accessibles en famille",b:false},{t:"Profiter du Walmart/Costco de Saguenay pour les provisions",b:false}]},
+
+  { jour:14, date:"Mercredi 29 juillet 2026", emoji:"⛴️", de:"Saguenay", a:"Tadoussac",
+    trajet:"~120 km · 1h30 (route 172 + traversier)",
+    hotel:"Motel Chantmartin", adresse:"414 Rue du Bateau Passeur, Tadoussac, QC", resa:"72071808139734", pool:false, dejeuner:false,
+    from:"Le Montagnais, 1080 Boulevard Talbot, Saguenay, QC, Canada",
+    to:"Motel Chantmartin, 414 Rue du Bateau Passeur, Tadoussac, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[48.25,-70.5], mapZoom:8,
+    mapPoints:[{lat:48.42,lng:-71.07,label:"Saguenay",icon:"🏁"},{lat:48.37,lng:-70.56,label:"Sainte-Rose-du-Nord",icon:"🌸"},{lat:48.27,lng:-70.16,label:"Baie Sainte-Marguerite",icon:"🐬"},{lat:48.14,lng:-69.72,label:"Ferme 5 Étoiles",icon:"🦬"},{lat:48.14,lng:-69.72,label:"Traversier → Tadoussac",icon:"⛴️"},{lat:48.1428,lng:-69.7185,label:"Motel Chantmartin",icon:"🏨"}],
+    etapes:["🌸 Sainte-Rose-du-Nord","🐬 Baie Sainte-Marguerite","🦬 Ferme 5 Étoiles (Sacré-Cœur)","⛴️ Traversier gratuit → Tadoussac"],
+    restos:["Pas de grandes enseignes à Tadoussac — faire les courses à Saguenay avant de partir"],
+    notes:[{t:"🌸 Sainte-Rose-du-Nord : surnommée 'Perle du Fjord', vue magnifique sur le Saguenay",b:false},{t:"🐬 Baie Sainte-Marguerite : point d'observation des bélugas depuis la berge",b:false},{t:"🦬 Ferme 5 Étoiles (Sacré-Cœur) : refuge animalier, bisons, loups, orignaux, daims",b:false},{t:"⛴️ Traversier gratuit pour Tadoussac — prévoir un peu d'attente",b:false},{t:"ℹ️ Réservation confirmée — tarif non-annulable/non-modifiable",b:false}]},
+
+  { jour:15, date:"Jeudi 30 juillet 2026", emoji:"🐋", de:"Tadoussac", a:"Tadoussac",
+    trajet:"Journée sur place — 0 km",
+    hotel:"Motel Chantmartin", adresse:"414 Rue du Bateau Passeur, Tadoussac, QC", resa:"72071808139734", pool:false, dejeuner:false,
+    from:"Motel Chantmartin, 414 Rue du Bateau Passeur, Tadoussac, QC, Canada",
+    to:"Quai de Tadoussac, 101 Rue du Bord de l'Eau, Tadoussac, QC, Canada",
+    color:"#1A6B8A",
+    mapCenter:[48.14,-69.72], mapZoom:13,
+    mapPoints:[{lat:48.1428,lng:-69.7185,label:"Motel Chantmartin",icon:"🏨"},{lat:48.1456,lng:-69.7222,label:"Quai Tadoussac — 8h45",icon:"🐋"},{lat:48.145,lng:-69.719,label:"CIMM",icon:"🏛️"},{lat:48.148,lng:-69.72,label:"Sentier Pointe de l'Islet",icon:"🥾"}],
+    etapes:["🐋 Croisière baleines (Quai, 8h45)","🏛️ Centre interprétation mammifères marins (CIMM)","🥾 Sentier de la Pointe de l'Islet"],
+    restos:["Restaurant Chantmartin (sur place à l'hôtel)"],
+    notes:[{t:"8h45 — 🐋 CROISIÈRE AUX BALEINES — Être au quai à 8h45 !",b:false},{t:"Quai de Tadoussac, Guérite Zone 1 — 101 Rue du Bord de l'Eau — Commande #12509",b:false},{t:"Prévoir traversier + stationnement + marche pour rejoindre le quai",b:false},{t:"🏛️ Centre d'interprétation des mammifères marins (CIMM) : à 10 min à pied, idéal pour compléter l'expérience",b:false},{t:"🥾 Sentier de la Pointe de l'Islet : panorama sur la confluence Saguenay/St-Laurent",b:false},{t:"ℹ️ Réservation hôtel confirmée — tarif non-annulable/non-modifiable",b:false}]},
+
+  { jour:16, date:"Vendredi 31 juillet 2026", emoji:"🏞️", de:"Tadoussac", a:"Boischatel",
+    trajet:"~190 km · 2h15 (route 138 longeant le St-Laurent)",
+    hotel:"Sleep Inn & Suites Quebec City East", adresse:"5490 Boul Sainte-Anne, Boischatel, QC", resa:"72071863115991", pool:false, dejeuner:true,
+    from:"Motel Chantmartin, 414 Rue du Bateau Passeur, Tadoussac, QC, Canada",
+    to:"Sleep Inn & Suites Quebec City East, 5490 Boulevard Sainte-Anne, Boischatel, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[47.5,-70.5], mapZoom:7,
+    mapPoints:[{lat:48.1428,lng:-69.7185,label:"Tadoussac",icon:"🏁"},{lat:47.68,lng:-70.22,label:"Port-au-Persil (cascade)",icon:"💧"},{lat:47.44,lng:-70.49,label:"Baie-Saint-Paul (quai & boisé)",icon:"🎨"},{lat:47.17,lng:-70.87,label:"Canyon Sainte-Anne",icon:"🏞️"},{lat:46.9,lng:-71.15,label:"Boischatel",icon:"🏨"}],
+    etapes:["💧 Port-au-Persil (cascade)","🎨 Baie-Saint-Paul — Quai & Boisé","🏞️ Canyon Sainte-Anne"],
+    restos:["Walmart Beauport (proche Boischatel)"],
+    notes:[{t:"💧 Port-au-Persil : jolie cascade qui se jette dans le Saint-Laurent, village pittoresque de Charlevoix",b:false},{t:"🎨 Baie-Saint-Paul : capitale artistique de Charlevoix, quai panoramique et boisé du quai",b:false},{t:"🏞️ Canyon Sainte-Anne : gorge spectaculaire, ponts suspendus au-dessus des chutes — sensations garanties !",b:false},{t:"Arrivée à Boischatel, porte est de Québec City",b:false}]},
+
+  { jour:17, date:"Samedi 1er août 2026", emoji:"🏰", de:"Boischatel", a:"Québec City",
+    trajet:"~15 km · 20 min (autoroute 440 puis 40)",
+    hotel:"Holiday Inn Express Quebec City - Sainte-Foy", adresse:"3145 Avenue Des Hotels, Québec City, QC", resa:"72071853115991", pool:true, dejeuner:true,
+    from:"Sleep Inn & Suites Quebec City East, 5490 Boulevard Sainte-Anne, Boischatel, QC, Canada",
+    to:"Holiday Inn Express Quebec City Sainte Foy, 3145 Avenue Des Hotels, Quebec City, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[46.83,-71.25], mapZoom:12,
+    mapPoints:[{lat:46.9,lng:-71.15,label:"Boischatel",icon:"🏁"},{lat:46.9162,lng:-71.1393,label:"Chute Montmorency",icon:"💧"},{lat:46.81,lng:-71.28,label:"Méga Parc Québec",icon:"🎡"},{lat:46.8162,lng:-71.2082,label:"Quartier Petit-Champlain",icon:"🎨"},{lat:46.8198,lng:-71.2073,label:"Château Frontenac",icon:"🏰"}],
+    etapes:["💧 Chute Montmorency","🎡 Méga Parc Québec","🎨 Quartier Petit-Champlain","🏰 Château Frontenac"],
+    restos:["Walmart Sainte-Foy (proche hôtel)"],
+    notes:[{t:"💧 Chute Montmorency : plus haute que Niagara ! Téléphérique ou escalier pour descendre au pied",b:false},{t:"🎡 Méga Parc de Québec : parc d'attractions intérieur, idéal pour les enfants",b:false},{t:"🎨 Quartier Petit-Champlain : ruelles pittoresques, boutiques et glaciers",b:false},{t:"🏰 Château Frontenac et Terrasse Dufferin : vue magnifique sur le Saint-Laurent",b:false}]},
+
+  { jour:18, date:"Dimanche 2 août 2026", emoji:"🎡", de:"Québec City", a:"Québec City",
+    trajet:"Journée sur place — 0 km",
+    hotel:"Holiday Inn Express Quebec City - Sainte-Foy", adresse:"3145 Avenue Des Hotels, Québec City, QC", resa:"72071853115991", pool:true, dejeuner:true,
+    from:"Holiday Inn Express Quebec City Sainte Foy, 3145 Avenue Des Hotels, Quebec City, QC, Canada",
+    to:"Holiday Inn Express Quebec City Sainte Foy, 3145 Avenue Des Hotels, Quebec City, QC, Canada",
+    color:"#1E6B3A",
+    mapCenter:[46.81,-71.21], mapZoom:13,
+    mapPoints:[{lat:46.8198,lng:-71.2073,label:"Château Frontenac",icon:"🏰"},{lat:46.815,lng:-71.21,label:"Citadelle + Plaines d'Abraham",icon:"🌳"},{lat:46.8192,lng:-71.208,label:"Funiculaire Vieux-Québec",icon:"🚟"},{lat:46.8162,lng:-71.2082,label:"Quartier Petit-Champlain",icon:"🎨"},{lat:46.8128,lng:-71.2037,label:"Mary's Popcorn (Côte de la Montagne)",icon:"🍿"}],
+    etapes:["🏰 Château Frontenac","🌳 Citadelle + Plaines d'Abraham","🚟 Funiculaire du Vieux-Québec","🎨 Quartier Petit-Champlain"],
+    restos:["Walmart Sainte-Foy (proche hôtel)"],
+    gourmand:["🍿 Mary's Popcorn — Côte de la Montagne, Québec (Vieux-Québec, en descendant vers le Petit-Champlain)"],
+    notes:[{t:"🏰 Château Frontenac et Terrasse Dufferin",b:false},{t:"🌳 Citadelle + Parc des Champs-de-Bataille (Plaines d'Abraham) : relève de la garde, picnic en famille",b:false},{t:"🚟 Funiculaire du Vieux-Québec : relie la Haute-Ville à la Basse-Ville",b:false},{t:"🎨 Quartier Petit-Champlain : shopping, glaciers, ambiance unique",b:false}]},
+
+  { jour:19, date:"Lundi 3 août 2026", emoji:"🏞️", de:"Québec City", a:"Trois-Rivières",
+    trajet:"~145 km · 1h30 (autoroute 40 ouest)",
+    hotel:"Super 8 by Wyndham Trois-Rivières", adresse:"3185 boul. St-Jean, Trois-Rivières, QC", resa:"72076612039501", pool:true, dejeuner:true,
+    from:"Holiday Inn Express Quebec City Sainte Foy, 3145 Avenue Des Hotels, Quebec City, QC, Canada",
+    to:"Super 8 by Wyndham Trois-Rivières, 3185 boulevard St-Jean, Trois-Rivières, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[46.6,-72.2], mapZoom:8,
+    mapPoints:[{lat:46.8162,lng:-71.2082,label:"Québec City",icon:"🏁"},{lat:47.23,lng:-71.5,label:"Parc Jacques-Cartier (détour nord)",icon:"🏞️"},{lat:46.35,lng:-72.54,label:"Trois-Rivières",icon:"🏨"}],
+    note_logistique:"💡 Le Parc Jacques-Cartier est au nord de Québec (route 175), à l'opposé de Trois-Rivières. Si vous y allez, prévoyez un aller-retour le matin avant de reprendre la route (environ +1h30 au programme).",
+    etapes:["🏞️ Parc Jacques-Cartier (option matin — détour)","🍁 Érablière du Cap","🏙️ Trois-Rivières (vieux port)"],
+    restos:["Walmart Trois-Rivières (proche hôtel)"],
+    notes:[{t:"🏞️ Option matinale : Parc national de la Jacques-Cartier — vallée glaciaire, randonnée facile en famille",b:false},{t:"🍁 Érablière du Cap : cabane à sucre typique québécoise, cuisine traditionnelle et sirop d'érable artisanal (sur la route vers Trois-Rivières)",b:false},{t:"Route vers Trois-Rivières le long du Saint-Laurent",b:false},{t:"Trois-Rivières : ville fondée en 1634, l'une des plus anciennes du Canada",b:false},{t:"Centre-ville historique et vieux port à explorer",b:false}]},
+
+  { jour:20, date:"Mardi 4 août 2026", emoji:"🏙️", de:"Trois-Rivières", a:"Montréal",
+    trajet:"~140 km · 1h30 (autoroute 40 ouest)",
+    hotel:"Holiday Inn Montréal - Longueuil", adresse:"900 Rue St. Charles Est, Longueuil, QC", resa:"3813999964", pool:false, dejeuner:false,
+    from:"Super 8 by Wyndham Trois-Rivières, 3185 boulevard St-Jean, Trois-Rivières, QC, Canada",
+    to:"Holiday Inn Montréal Longueuil, 900 Rue St. Charles Est, Longueuil, QC, Canada",
+    color:"#2471A3",
+    mapCenter:[45.7,-73.5], mapZoom:8,
+    mapPoints:[{lat:46.35,lng:-72.54,label:"Trois-Rivières",icon:"🏁"},{lat:45.5646,lng:-73.5508,label:"Biodôme de Montréal",icon:"🦁"},{lat:45.508,lng:-73.5352,label:"Parc Jean-Drapeau",icon:"🌳"},{lat:45.4966,lng:-73.5522,label:"Centre des Sciences de Montréal",icon:"🔬"},{lat:45.5244,lng:-73.5774,label:"Longueuil",icon:"🏨"}],
+    etapes:["🦁 Biodôme de Montréal","🌳 Parc Jean-Drapeau","🔬 Centre des Sciences de Montréal"],
+    restos:["Walmart Longueuil","Costco Longueuil"],
+    notes:[{t:"Route vers Montréal par l'autoroute 40 (150 km)",b:false},{t:"🦁 Biodôme de Montréal : quatre écosystèmes sous un même toit — idéal avec les enfants",b:false},{t:"🌳 Parc Jean-Drapeau : île Sainte-Hélène, grands espaces, vues sur le fleuve",b:false},{t:"🔬 Centre des Sciences de Montréal : expositions interactives",b:false}]},
+
+  { jour:21, date:"Mercredi 5 août 2026", emoji:"🎡", de:"Montréal", a:"Montréal",
+    trajet:"Journée sur place — 0 km",
+    hotel:"Holiday Inn Montréal - Longueuil", adresse:"900 Rue St. Charles Est, Longueuil, QC", resa:"3813999964", pool:false, dejeuner:false,
+    from:"Holiday Inn Montréal Longueuil, 900 Rue St. Charles Est, Longueuil, QC, Canada",
+    to:"Holiday Inn Montréal Longueuil, 900 Rue St. Charles Est, Longueuil, QC, Canada",
+    color:"#1E6B3A",
+    mapCenter:[45.505,-73.565], mapZoom:13,
+    mapPoints:[{lat:45.504,lng:-73.5637,label:"Vieux-Montréal — Rue St-Paul",icon:"🏘️"},{lat:45.507,lng:-73.554,label:"Place Jacques-Cartier",icon:"🎭"},{lat:45.5077,lng:-73.5523,label:"Marché Bonsecours",icon:"🛍️"},{lat:45.508,lng:-73.5352,label:"Vieux-Port & Grande Roue",icon:"🎡"},{lat:45.506,lng:-73.5524,label:"Centre des Sciences (facultatif)",icon:"🔬"},{lat:45.506,lng:-73.553,label:"SOS Labyrinthe",icon:"🌀"},{lat:45.5068,lng:-73.5681,label:"Ville souterraine (entrée)",icon:"🏙️"},{lat:45.5213,lng:-73.5917,label:"Bernie Beigne (Bernard O)",icon:"🍩"},{lat:45.525,lng:-73.588,label:"Chez Claudette (Laurier Est)",icon:"🍳"},{lat:45.5226,lng:-73.5758,label:"La Banquise (Rachel E)",icon:"🍟"}],
+    etapes:["🏘️ Vieux-Montréal — Rue St-Paul","🛍️ Marché Bonsecours","🎭 Place Jacques-Cartier","🎡 Vieux-Port & Grande Roue","🌀 SOS Labyrinthe","🏙️ Ville souterraine"],
+    restos:["Walmart Longueuil","Costco Longueuil"],
+    gourmand:["🍩 Bernie Beigne — 23 Rue Bernard O, Montréal (Mile-End) — beignes artisanaux incontournables","🍳 Chez Claudette — 351 Avenue Laurier Est, Montréal (Plateau) — diner québécois rétro, déjeuners mythiques","🍟 La Banquise — 994 Rue Rachel E, Montréal (Plateau) — LA poutine de référence, ouvert 24h/24","🍿 Mary's Popcorn — même enseigne que Québec, à trouver sur place à Montréal"],
+    notes:[{t:"🏘️ Rue Saint-Paul : artères historique du Vieux-Montréal",b:false},{t:"🛍️ Marché Bonsecours : marché emblématique, boutiques québécoises",b:false},{t:"🎭 Place Jacques-Cartier : terrasses animées, artistes de rue",b:false},{t:"🎡 Vieux-Port : Grande Roue de Montréal, vues sur le fleuve",b:false},{t:"🌀 SOS Labyrinthe du Vieux-Port : aventure en famille",b:false},{t:"🏙️ Ville souterraine (Underground City) : 33 km de galeries climatisées sous Montréal",b:false}]},
+
+  { jour:22, date:"Jeudi 6 août 2026", emoji:"🛫", de:"Montréal", a:"Paris",
+    trajet:"~50 km · 40 min (Longueuil → YUL) + Vol 7h00",
+    hotel:"Holiday Inn Montréal - Longueuil", adresse:"900 Rue St. Charles Est, Longueuil, QC", resa:"3813999964", pool:false, dejeuner:false,
+    from:"Holiday Inn Montréal Longueuil, 900 Rue St. Charles Est, Longueuil, QC, Canada",
+    to:"Aéroport Montréal-Trudeau YUL, 975 Bd Roméo-Vachon N, Dorval, QC, Canada",
+    color:"#C0392B",
+    mapCenter:[45.47,-73.74], mapZoom:11,
+    mapPoints:[{lat:45.5244,lng:-73.5774,label:"Longueuil",icon:"🏁"},{lat:45.6228,lng:-74.0089,label:"Premium Outlets Montréal (Mirabel)",icon:"🛍️"},{lat:45.4657,lng:-73.7451,label:"Aéroport YUL — 21h00",icon:"🛫"}],
+    etapes:["🛍️ Premium Outlets Montréal (Mirabel)","🛫 Restitution voiture YUL (21h00)","✈️ Vol BF761 (23h00)"],
+    restos:["Walmart Mirabel (proche des outlets)"],
+    notes:[{t:"🛍️ Matinée shopping aux Premium Outlets Montréal (Mirabel) avant de rendre la voiture",b:false},{t:"Prévoir du temps pour le trajet vers YUL",b:false},{t:"21h00 — Restitution voiture à l'aéroport YUL",b:false},{t:"23h00 — Décollage vol BF761 French Bee vers Paris Orly",b:false},{t:"Arrivée Paris Orly T4 le 7 août à 12h00",b:false}]},
+];
+
+// ===== ÉTAT =====
+let currentDay = 0;
+let leafletMap = null;
+
+// ===== NAVIGATION =====
+function showSection(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(name==='planning') { renderDay(currentDay); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function changeDay(delta) {
+  currentDay = Math.max(0, Math.min(days.length-1, currentDay+delta));
+  renderDay(currentDay);
+  window.scrollTo({top: document.querySelector('.planning-header').offsetTop - 70, behavior:'smooth'});
+}
+
+document.addEventListener('keydown', e => {
+  const p = document.getElementById('section-planning');
+  if(p && p.classList.contains('active')) {
+    if(e.key==='ArrowRight') changeDay(1);
+    if(e.key==='ArrowLeft') changeDay(-1);
+  }
+});
+
+// ===== RENDU =====
+function mapsUrl(from, to) {
+  return `https://www.google.com/maps/dir/${encodeURIComponent(from)}/${encodeURIComponent(to)}`;
+}
+
+function renderDay(i) {
+  const d = days[i];
+  document.getElementById('day-counter').textContent = `Jour ${i+1} / 22 — ${d.date}`;
+
+  const notesHtml = d.notes.map(n =>
+    `<li class="${n.b?'bold':''} ${n.w?'warn':''}">${n.t}</li>`
+  ).join('');
+
+  const etapesHtml = d.etapes ? `
+    <div class="etapes-bar">
+      <span class="etapes-bar-label">📍 Étapes :</span>
+      ${d.etapes.map((e,idx) =>
+        `<span class="badge badge-blue">${e}</span>${idx<d.etapes.length-1?'<span style="color:var(--text-muted);font-size:12px;margin:0 2px">→</span>':''}`
+      ).join('')}
+    </div>` : '';
+
+  const restosHtml = d.restos ? `
+    <div class="restos-bar">
+      <div class="restos-bar-label">🛒 Courses à proximité de l'hôtel</div>
+      <ul class="notes-list">${d.restos.map(r=>`<li>${r}</li>`).join('')}</ul>
+    </div>` : '';
+
+  const gourmandHtml = d.gourmand ? `
+    <div style="padding:12px 24px;background:#FEF9E7;border-top:1px solid var(--grey)">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#7D6608;margin-bottom:6px">🍽️ Adresses gourmandes à ne pas manquer</div>
+      <ul class="notes-list">${d.gourmand.map(g=>`<li style="font-weight:500;color:#5D4E00">${g}</li>`).join('')}</ul>
+    </div>` : '';
+
+  const logistiqueHtml = d.note_logistique
+    ? `<div class="alert alert-info" style="margin:12px 24px">${d.note_logistique}</div>` : '';
+
+  document.getElementById('day-display').innerHTML = `
+    <div class="day-card">
+      <div class="day-card-header" style="background:${d.color}">
+        <div class="day-card-num">Jour ${d.jour} sur 22</div>
+        <div class="day-card-title">${d.emoji} ${d.date}</div>
+        <div class="day-card-subtitle">${d.de !== d.a ? d.de+' → '+d.a : 'Journée sur place — '+d.de}${d.trajet ? ' <span style="opacity:.7;font-size:13px;margin-left:8px">· '+d.trajet+'</span>' : ''}</div>
+      </div>
+      ${etapesHtml}
+      <div id="day-map-${i}" class="day-map"></div>
+      <div class="day-card-body">
+        <div class="day-col">
+          <div class="day-col-title">🏨 Hébergement du soir</div>
+          ${d.trajet ? `<div style="background:var(--grey-light);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:13px"><span style="font-weight:600">🚗 Trajet direct :</span> ${d.trajet}</div>` : ''}
+          <div class="hotel-name">${d.hotel}</div>
+          <div class="hotel-addr">📍 ${d.adresse}</div>
+          <div class="hotel-resa">🔖 Réservation : ${d.resa}</div>
+          ${d.pool ? `<div style="display:inline-block;background:#D6EAF8;color:#1A5276;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600;margin-top:6px;margin-right:6px">🏊 Piscine</div>` : ''}
+          ${d.dejeuner ? `<div style="display:inline-block;background:#D5F5E3;color:#1A5733;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600;margin-top:6px">🍳 Petit déjeuner inclus</div>` : ''}
+          <a href="${mapsUrl(d.from, d.to)}" target="_blank" class="maps-link">🗺️ Itinéraire Google Maps</a>
+        </div>
+        <div class="day-col">
+          <div class="day-col-title">📋 Programme du jour</div>
+          <ul class="notes-list">${notesHtml}</ul>
+        </div>
+      </div>
+      ${restosHtml}
+      ${gourmandHtml}
+      ${logistiqueHtml}
+      <div class="day-footer">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--grey)">
+          <button class="btn btn-secondary" onclick="changeDay(-1)" ${i===0?'disabled':''}>← Jour précédent</button>
+          <span style="font-size:12px;color:var(--text-muted)">${i+1} / 22</span>
+          <button class="btn btn-secondary" onclick="changeDay(1)" ${i===days.length-1?'disabled':''}>Jour suivant →</button>
+        </div>
+      </div>
+    </div>`;
+
+  // Initialiser la carte Leaflet
+  setTimeout(() => initMap(i), 50);
+}
+
+function initMap(i) {
+  const d = days[i];
+  const mapId = `day-map-${i}`;
+  const el = document.getElementById(mapId);
+  if(!el) return;
+
+  // Détruire la carte précédente si elle existe
+  if(leafletMap) { leafletMap.remove(); leafletMap = null; }
+
+  leafletMap = L.map(mapId, {
+    center: [d.mapCenter[0], d.mapCenter[1]],
+    zoom: d.mapZoom,
+    zoomControl: true,
+    scrollWheelZoom: false
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    maxZoom: 18
+  }).addTo(leafletMap);
+
+  // Icônes personnalisées
+  function makeIcon(emoji) {
+    return L.divIcon({
+      className: '',
+      html: `<div style="background:white;border:2px solid #C0392B;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 4px rgba(0,0,0,0.3)">${emoji}</div>`,
+      iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16]
+    });
+  }
+
+  // Tracer la ligne de l'itinéraire
+  if(d.mapPoints && d.mapPoints.length > 1) {
+    const latlngs = d.mapPoints.map(p => [p.lat, p.lng]);
+    L.polyline(latlngs, {color:'#C0392B', weight:3, opacity:0.7, dashArray:'6,4'}).addTo(leafletMap);
+  }
+
+  // Placer les marqueurs
+  if(d.mapPoints) {
+    d.mapPoints.forEach((p, idx) => {
+      const marker = L.marker([p.lat, p.lng], {icon: makeIcon(p.icon || '📍')}).addTo(leafletMap);
+      marker.bindPopup(`<strong>${p.label}</strong>`);
+    });
+  }
+}
+
+// ===== CARTE GLOBALE ACCUEIL =====
+function initGlobalMap() {
+  const el = document.getElementById('global-map');
+  if(!el) return;
+  const gmap = L.map('global-map', { center:[46.5,-73.5], zoom:5, scrollWheelZoom:false, zoomControl:true });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'© OpenStreetMap', maxZoom:18 }).addTo(gmap);
+
+  const stops = [
+    {lat:45.4657,lng:-73.7451,label:"J1 — Montréal (Aéroport)",num:"1"},{lat:44.1634,lng:-77.3833,label:"J2 — Belleville",num:"2"},
+    {lat:43.0962,lng:-79.0744,label:"J3-4 — Niagara Falls",num:"3"},{lat:43.2575,lng:-79.0636,label:"J5 — St. Catharines",num:"4"},
+    {lat:43.8975,lng:-78.9428,label:"J6-7 — Toronto (Whitby)",num:"5"},{lat:45.4215,lng:-75.6972,label:"J8 — Ottawa",num:"6"},
+    {lat:46.1167,lng:-74.5833,label:"J9-10 — Mont-Tremblant",num:"7"},{lat:46.5479,lng:-72.7479,label:"J11 — Shawinigan",num:"8"},
+    {lat:47.4167,lng:-72.7833,label:"J12 — La Tuque",num:"9"},{lat:48.52,lng:-72.22,label:"J13 — Lac Saint-Jean (Roberval)",num:"10"},
+    {lat:48.42,lng:-71.07,label:"J14 — Saguenay",num:"11"},{lat:48.1428,lng:-69.7185,label:"J15-16 — Tadoussac",num:"12"},
+    {lat:46.9,lng:-71.15,label:"J17 — Boischatel",num:"13"},{lat:46.8162,lng:-71.2082,label:"J18-19 — Québec City",num:"14"},
+    {lat:46.35,lng:-72.54,label:"J20 — Trois-Rivières",num:"15"},{lat:45.5244,lng:-73.5774,label:"J21-22 — Montréal (Longueuil)",num:"16"},
+  ];
+
+  const latlngs = stops.map(s => [s.lat,s.lng]);
+  L.polyline(latlngs, {color:'#C0392B',weight:3,opacity:0.7,dashArray:'6,4'}).addTo(gmap);
+
+  stops.forEach(s => {
+    const icon = L.divIcon({
+      className:'',
+      html:`<div style="background:#C0392B;color:white;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,0.4);border:2px solid white">${s.num}</div>`,
+      iconSize:[26,26], iconAnchor:[13,13], popupAnchor:[0,-16]
+    });
+    L.marker([s.lat,s.lng],{icon}).addTo(gmap).bindPopup(`<strong>${s.label}</strong>`);
+  });
+}
+
+// Init
+renderDay(0);
+initGlobalMap();
+</script>
+</body>
+</html>
